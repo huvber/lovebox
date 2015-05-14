@@ -1,0 +1,14 @@
+{
+    "client_id": "242456704564-d3ed2l9j1vuj68t62k8hlrl69a1nplfa.apps.googleusercontent.com",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "client_secret": "RGTY0SYTF5vGDCK2A7nls24O",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "redirect_url": "urn:ietf:wg:oauth:2.0:oob",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "tokens": {
+        "access_token": "ya29.cwG6LimcWi91SUXWIXq1Sq5mN7IrxEwnEqynSyjfUOXDs6tL6ug3P8KT6dTCIKuEpFTUAAIyO8bsyQ",
+        "token_type": "Bearer",
+        "refresh_token": "1/tmbd7apLhxUabiQdPU_bGsfH0FOly6PzYWHGy0ib10kMEudVrK5jSpoR30zcRFq6",
+        "expiry_date": 1431620082646
+    }
+}

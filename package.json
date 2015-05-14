@@ -1,0 +1,33 @@
+{
+  "name": "lovebox",
+  "version": "0.0.1",
+  "description": "Connect this to google drive folder and sync mp3 to sound randomly on raspberry pi",
+  "main": "main.js",
+  "scripts": {
+    "test": "test",
+    "start": "main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huvber/lovebox.git"
+  },
+  "keywords": [
+    "raspberrypi",
+    "google",
+    "drive",
+    "mp3",
+    "button"
+  ],
+  "author": "Andrea Mannarà",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huvber/lovebox/issues"
+  },
+  "homepage": "https://github.com/huvber/lovebox",
+  "dependencies": {
+    "async": "^0.9.0",
+    "debug": "^2.2.0",
+    "googleapis": "^2.0.3",
+    "request": "^2.55.0"
+  }
+}
