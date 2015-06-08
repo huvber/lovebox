@@ -2,9 +2,10 @@ var debug   = require('debug');
 var fs      = require('fs');
 var os      = require('os');
 var async   = require('async');
-var exec    = require('child_process').exec;
+var cp    = require('child_process');
 var ddpi    = require('./server');
-var ison     = require('is-online');
+var ison    = require('is-online');
+
 var dbg = {
   //MAIN OUTPUT
   m : debug('lovebox:main'),
@@ -27,6 +28,7 @@ var Lovebox = function(){
   this.ddp = undefined;
   this.isPlaying = false;
   this.currentTrack = '';
+  this.musicChild = undefined;
 };
 
 // Method to read the config file.
@@ -77,11 +79,21 @@ Lovebox.prototype.resetMp3 = function(handler){
   for (var f in files){
     fs.unlinkSync('./mp3s/'+ files[f]);
   }
-  handler();
+  if(handler !== undefined) handler();
 };
-Lovebox.prototype.playMusic = function(){
-  return true;
+Lovebox.prototype.playMusic = function(handler){
+  var files = fs.readdirSync('./mp3s');
+  var ran = Math.floor(Math.random() * files.length);
+  var self = this;
+  this.currentTrack = files[ran];
+  this.musicChild = cp.exec('mplayer ./mp3s/'+files[ran]);
+  this.musicChild.on('close',function(){
+    self.playMusic();
+  });
+  if(handler !== undefined) handler();
 };
+
+
 
 Lovebox.prototype.start = function(){
   //check if is connected

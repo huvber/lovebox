@@ -2,7 +2,7 @@
     "server": {
         "host": "localhost",
         "old-host": "lovebox.meteor.com",
-        "port": 3000,
+        "port": "3000",
         "user": "admin@lovebox.lo",
         "passwd": "loveboxadmin"
     },

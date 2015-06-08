@@ -30,6 +30,7 @@
     "ddp-login": "^1.0.7",
     "debug": "",
     "is-online": "",
+    "omxctrl": "^0.1.2",
     "request": "",
     "underscore": "^1.8.3"
   }
