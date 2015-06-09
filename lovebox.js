@@ -67,7 +67,7 @@ var downloadMp3 = function(config,mp3){
   var exec = require('child_process').exec;
   var url = '\'http://' + config.server.host + ':' + config.server.port + mp3.url+'\'';
   if (!fs.existsSync('mp3s/' + mp3.filename)) {
-    child = exec('wget -P mp3s/ ' + url,
+    child = exec('wget -P mp3s/ \'' + url + '\'',
       function(error, stdout, stderr) {
           if (error !== null)
             dbg.e(error);
@@ -85,14 +85,27 @@ Lovebox.prototype.playMusic = function(handler){
   var files = fs.readdirSync('./mp3s');
   var ran = Math.floor(Math.random() * files.length);
   var self = this;
+  dbg.m('Playing: ' + files[ran]);
+  if(this.lovebox !== undefined){
+    this.lovebox.state = 'playing: ' + files[ran];
+    this.ddp.changeLovebox(this.lovebox,function(err,res){
+
+    });
+  }
+
   this.currentTrack = files[ran];
-  this.musicChild = cp.exec('mplayer ./mp3s/'+files[ran]);
-  this.musicChild.on('close',function(){
-    self.playMusic();
+  this.musicChild = cp.spawn('mplayer',['./mp3s/'+files[ran]]);
+  this.musicChild.on('close',function(code,signal){
+    dbg.i('close '+ signal);
+    if(signal !== 'SIGKILL')
+      self.playMusic();
   });
   if(handler !== undefined) handler();
 };
-
+Lovebox.prototype.stopPlaying = function(){
+  dbg.i('stop music');
+  this.musicChild.kill('SIGKILL');
+};
 
 
 Lovebox.prototype.start = function(){
@@ -141,6 +154,15 @@ Lovebox.prototype.init = function(cfgUrl){
 
       //check state changed
       //CHANGE STATE
+      if(lovebox.state.search('stop')!== -1){
+        self.stopPlaying();
+        return;
+      }
+      if(lovebox.state.search('next')!== -1){
+        self.stopPlaying();
+        self.playMusic();
+        return;
+      }
 
     },
     onMp3Added: function(mp3){

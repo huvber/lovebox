@@ -71,7 +71,6 @@ Server.prototype.connect = function(func) {
 
       var obsLoveboxes =  ddp.observe('loveboxes');
       obsLoveboxes.changed = function(idL, oldFields, clearedFields, newFields) {
-        log(srv.lovebox);
         if (idL === config.loveboxId) {
           _.extend(srv.lovebox, newFields);
 
@@ -81,8 +80,8 @@ Server.prototype.connect = function(func) {
 
       var obsMp3s = ddp.observe('mp3s');
       obsMp3s.added = function(id) {
-        log('evvai');
         mp3 = ddp.collections.mp3s.find(id);
+        console.log(mp3);
         if (config.loveboxId === mp3.lovebox) {
           if (data.onMp3Added !== undefined) data.onMp3Added(mp3);
         }
@@ -104,7 +103,6 @@ Server.prototype.connect = function(func) {
             if(err)
               log('getList error' + err);
             else if (data.onGetLovebox !== undefined) data.onGetLovebox(srv.lovebox,res);
-            log(res);
             c(err,null);
           });
         }
@@ -125,5 +123,7 @@ Server.prototype.connect = function(func) {
   if(func !== undefined) func();
 };
 
-
+Server.prototype.changeLovebox = function(lovebox,handler){
+  this.ddp.call('loveboxChangeState',[lovebox],handler);
+};
 module.exports = Server;
